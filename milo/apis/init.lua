@@ -252,13 +252,13 @@ function Milo:learnRecipe()
 		end
 	end
 
-	turtle.select(1)
+	turtle.select(16)
 	if not turtle.craft() then
 		return false, 'Failed to craft'
 	end
 
 	local results = self:getTurtleInventory()
-	if not results or not results[1] then
+	if not results or not results[16] then
 		return false, 'Failed to craft'
 	end
 
@@ -304,13 +304,10 @@ function Milo:learnRecipe()
 	end
 
 	local recipe
-	for _,v in pairs(results) do
-		if not v.craftingTool then
-			recipe = v
-			if maxCount then
-				recipe.maxCount = maxCount
-			end
-			break
+	if not results[16].craftingTool then 
+                recipe = results[16]
+		if maxCount then
+			recipe.maxCount = maxCount
 		end
 	end
 
