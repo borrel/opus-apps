@@ -1,6 +1,6 @@
 {
 	title = 'busted',
-	repository = 'kepler155c/opus-apps/{{OPUS_BRANCH}}/moonscript',
+	repository = 'borrel/opus-apps/{{OPUS_BRANCH}}/moonscript',
 	description = [[WIP]],
 	license = 'MIT',
     required = {
