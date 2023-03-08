@@ -50,9 +50,9 @@ local function equip(side, item, rawName)
 	turtle.select(1)
 end
 
-equip('left', 'plethora:introspection', 'plethora:module:0')
-local intro = device['plethora:introspection']
-local inv = intro.getInventory()
+--equip('left', 'plethora:introspection', 'plethora:module:0')
+--local intro = device['plethora:introspection']
+local inv
 
 if not fs.exists(STARTUP_FILE) then
 	Util.writeFile(STARTUP_FILE,
@@ -65,34 +65,19 @@ local localName
 
 print('detecting wired modem connected to furnaces...')
 for _, dev in pairs(device) do
-	if dev.type == 'wired_modem' and dev.getNameLocal then
-		local list = dev.getNamesRemote()
-		furnaces = { }
-		localName = dev.getNameLocal()
-		for _, name in pairs(list) do
-			if device[name].type ~= 'ic2:compressor' then
-				furnaces = nil
-				break
-			end
-			table.insert(furnaces, {
-				dev = device[name],
-				list = device[name].list(),
-			})
-		end
+	if dev.type == 'ic2:compressor' then
+		table.insert(furnaces, {
+			dev = dev,
+			list = dev.list(),
+		})
 	end
-	if furnaces then
-		print('Using wired modem: '  .. dev.name)
-		print('Furnaces: ' .. #furnaces)
-		break
+        if dev.type == 'minecraft:chest' then
+		inv = dev
 	end
 end
+_G.printError([[Program must be restarted if new compressors are added.]])
 
-if not furnaces then
-	error('Turtle must be connected to a second wired_modem connected to comperessor only')
-end
-
-_G.printError([[Program must be restarted if new furnaces are added.]])
-
+assert(inv, "need a chest")
 local function getSlot(furnace, slotNo)
 	if not furnace.list[slotNo] then
 		furnace.list[slotNo] = {
