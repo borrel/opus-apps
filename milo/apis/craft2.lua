@@ -306,16 +306,17 @@ function Craft.craftRecipeInternal(recipe, count, storage, origItem, path)
 		count = canCraft
 	end
 
-	local function maxBatch()
-		local max = 64
-		for _, i in Craft.ingredients(recipe) do
-			max = math.min(max, math.floor(itemDB:getMaxCount(i.key) / i.count))
+	local maxBatch  = 64
+        local doneSlots = 16
+	for k, i in Craft.ingredients(recipe) do
+		maxBatch = math.min(maxBatch, math.floor(itemDB:getMaxCount(i.key) / i.count))
+		if recipe.craftinfTools[i.key] then  
+			doneSlots = doneSlots - 1
 		end
-		return max
 	end
 
-	local maxCount = recipe.maxCount or math.floor(64 / recipe.count)
-	maxCount = math.min(maxCount, maxBatch())
+	local maxCount = recipe.maxCount or math.floor(64 / recipe.count)*doneSlots
+	maxCount = math.min(maxCount, maxBatch)
 
 	repeat
 		local craftedIngredient
