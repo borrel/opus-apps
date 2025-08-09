@@ -310,7 +310,7 @@ function Craft.craftRecipeInternal(recipe, count, storage, origItem, path)
         local doneSlots = 16
 	for k, i in Craft.ingredients(recipe) do
 		maxBatch = math.min(maxBatch, math.floor(itemDB:getMaxCount(i.key) / i.count))
-		if recipe.craftinfTools[i.key] then  
+		if recipe.craftingTools[i.key] then  
 			doneSlots = doneSlots - 1
 		end
 	end
