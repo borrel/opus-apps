@@ -263,9 +263,7 @@ function Milo:learnRecipe()
 
 	local numResults = 0
 	for _,v in pairs(results) do
-		if v.count > 0 then
-			numResults = numResults + 1
-		end
+		numResults = numResults + v.count
 	end
 	if numResults > 1 then
 		for _,v1 in pairs(results) do
@@ -297,13 +295,13 @@ function Milo:learnRecipe()
 		end
 	end
 
-	local recipe = result[12]
+	local recipe = results[12]
 
 	if not recipe then
 		return false, 'Unknown error'
 	end
 
-	newRecipe.count = recipe.count
+	newRecipe.count = numResults
 
 	local key = itemDB:makeKey(recipe)
 	if recipe.maxCount ~= 64 then
