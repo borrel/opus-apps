@@ -246,12 +246,6 @@ function Milo:learnRecipe()
 		return false, 'No recipe defined'
 	end
 
-	for _,v in pairs(ingredients) do
-		if v.count > 1 then
-			return false, 'Too many items'
-		end
-	end
-
 	turtle.select(12)
 	if not turtle.craft() then
 		return false, 'Failed to craft'
@@ -293,7 +287,7 @@ function Milo:learnRecipe()
 					--[[
 					Turtles can only craft one item at a time using a tool :(
 					]]--
-					maxCount = 1
+					--maxCount = 1
 
 					newRecipe.craftingTools[itemDB:makeKey(tool)] = true
 					v1.craftingTool = true
